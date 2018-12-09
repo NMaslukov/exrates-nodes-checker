@@ -1,7 +1,6 @@
-package com.exrates.checker.api;
+package me.exrates.checker.api;
 
-import com.exrates.checker.BitcoinBlocksCheckerService;
-import org.json.JSONObject;
+import me.exrates.checker.BitcoinBlocksCheckerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -14,19 +13,23 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.security.cert.X509Certificate;
 
-@Service("eqlBlockChecker")
+@Service("nsrBlockChecker")
 @PropertySource("classpath:/coins_api_endpoints.properties")
-public class EQLBlockChecker implements BitcoinBlocksCheckerService {
+public class NSRBlockChecker implements BitcoinBlocksCheckerService {
 
     @Autowired
     Client client;
 
-    @Value("#{eql.blocks.endpoint")
+    @Value("#{nsr.blocks.endpoint")
     private String endpoint;
 
     @Override
     public long getExplorerBlocksAmount() {
-        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height");
+        String bestHtml = "<td class=\"height text-right\"><a href=\"/block/";
+
+        String html = client.target(endpoint).request().get().readEntity(String.class);
+        String substring = html.substring(html.indexOf(bestHtml) + bestHtml.length());
+        return Long.valueOf(substring.substring(0, substring.indexOf("\">")));
     }
 
     public static void main(String[] args) throws Exception{
@@ -45,9 +48,8 @@ public class EQLBlockChecker implements BitcoinBlocksCheckerService {
 
         String bestHtml = "<td class=\"height text-right\"><a href=\"/block/";
 
-        String html = client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class);
+        String html = client.target("https://explorer.nubits.com/").request().get().readEntity(String.class);
         String substring = html.substring(html.indexOf(bestHtml) + bestHtml.length());
-        System.out.println(new JSONObject(client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height"));
+        System.out.println(Long.valueOf(substring.substring(0, substring.indexOf("\">"))));
     }
 }
-

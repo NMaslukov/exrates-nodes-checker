@@ -1,6 +1,6 @@
-package com.exrates.checker.api;
+package me.exrates.checker.api;
 
-import com.exrates.checker.BitcoinBlocksCheckerService;
+import me.exrates.checker.BitcoinBlocksCheckerService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,19 +14,19 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.security.cert.X509Certificate;
 
-@Service("rizBlockChecker")
+@Service("ftoBlockChecker")
 @PropertySource("classpath:/coins_api_endpoints.properties")
-public class RIZBlockChecker implements BitcoinBlocksCheckerService {
+public class FLOBlockChecker implements BitcoinBlocksCheckerService {
 
     @Autowired
     Client client;
 
-    @Value("#{riz.blocks.endpoint")
+    @Value("#{fto.blocks.endpoint")
     private String endpoint;
 
     @Override
     public long getExplorerBlocksAmount() {
-        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONArray("data").getJSONObject(0).getLong("blockcount");
+        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height");
     }
 
     public static void main(String[] args) throws Exception{
@@ -47,7 +47,7 @@ public class RIZBlockChecker implements BitcoinBlocksCheckerService {
 
         String html = client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class);
         String substring = html.substring(html.indexOf(bestHtml) + bestHtml.length());
-        System.out.println(new JSONObject(client.target("http://rizblockchain.com/ext/summary").request().get().readEntity(String.class)).getJSONArray("data").getJSONObject(0).getLong("blockcount"));
+        System.out.println(new JSONObject(client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height"));
     }
 }
 

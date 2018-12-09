@@ -1,4 +1,4 @@
-package com.exrates.checker;
+package me.exrates.checker;
 
 import javax.ws.rs.client.Client;
 

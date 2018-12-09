@@ -1,6 +1,6 @@
-package com.exrates.checker.api;
+package me.exrates.checker.api;
 
-import com.exrates.checker.BitcoinBlocksCheckerService;
+import me.exrates.checker.BitcoinBlocksCheckerService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

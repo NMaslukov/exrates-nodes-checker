@@ -1,6 +1,6 @@
-package com.exrates.checker.api;
+package me.exrates.checker.api;
 
-import com.exrates.checker.BitcoinBlocksCheckerService;
+import me.exrates.checker.BitcoinBlocksCheckerService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,19 +14,19 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.security.cert.X509Certificate;
 
-@Service("ftoBlockChecker")
+@Service("brbBlockChecker")
 @PropertySource("classpath:/coins_api_endpoints.properties")
-public class FLOBlockChecker implements BitcoinBlocksCheckerService {
+public class BRBBlockChecker implements BitcoinBlocksCheckerService {
 
     @Autowired
     Client client;
 
-    @Value("#{fto.blocks.endpoint")
+    @Value("#{brb.blocks.endpoint")
     private String endpoint;
 
     @Override
     public long getExplorerBlocksAmount() {
-        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height");
+        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONArray("data").getJSONObject(0).getLong("blockcount");
     }
 
     public static void main(String[] args) throws Exception{
@@ -45,9 +45,9 @@ public class FLOBlockChecker implements BitcoinBlocksCheckerService {
 
         String bestHtml = "<td class=\"height text-right\"><a href=\"/block/";
 
-        String html = client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class);
+        String html = client.target("https://breakbits.blockxplorer.info/ext/summary").request().get().readEntity(String.class);
         String substring = html.substring(html.indexOf(bestHtml) + bestHtml.length());
-        System.out.println(new JSONObject(client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height"));
+        System.out.println(new JSONObject(client.target("http://rizblockchain.com/ext/summary").request().get().readEntity(String.class)).getJSONArray("data").getJSONObject(0).getLong("blockcount"));
     }
 }
 

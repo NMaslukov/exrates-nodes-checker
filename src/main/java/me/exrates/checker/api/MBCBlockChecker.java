@@ -1,6 +1,7 @@
-package com.exrates.checker.api;
+package me.exrates.checker.api;
 
-import com.exrates.checker.BitcoinBlocksCheckerService;
+import me.exrates.checker.BitcoinBlocksCheckerService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -13,23 +14,19 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.security.cert.X509Certificate;
 
-@Service("nsrBlockChecker")
+@Service("mbcBlockChecker")
 @PropertySource("classpath:/coins_api_endpoints.properties")
-public class NSRBlockChecker implements BitcoinBlocksCheckerService {
+public class MBCBlockChecker implements BitcoinBlocksCheckerService {
 
     @Autowired
     Client client;
 
-    @Value("#{nsr.blocks.endpoint")
+    @Value("#{mbc.blocks.endpoint")
     private String endpoint;
 
     @Override
     public long getExplorerBlocksAmount() {
-        String bestHtml = "<td class=\"height text-right\"><a href=\"/block/";
-
-        String html = client.target(endpoint).request().get().readEntity(String.class);
-        String substring = html.substring(html.indexOf(bestHtml) + bestHtml.length());
-        return Long.valueOf(substring.substring(0, substring.indexOf("\">")));
+        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONObject("result").getLong("height");
     }
 
     public static void main(String[] args) throws Exception{
@@ -48,8 +45,8 @@ public class NSRBlockChecker implements BitcoinBlocksCheckerService {
 
         String bestHtml = "<td class=\"height text-right\"><a href=\"/block/";
 
-        String html = client.target("https://explorer.nubits.com/").request().get().readEntity(String.class);
+        String html = client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class);
         String substring = html.substring(html.indexOf(bestHtml) + bestHtml.length());
-        System.out.println(Long.valueOf(substring.substring(0, substring.indexOf("\">"))));
+        System.out.println(new JSONObject(client.target("https://api.mbc.wiki/?method=blockchain.supply").request().get().readEntity(String.class)).getJSONObject("result").getLong("height"));
     }
 }

@@ -1,4 +1,4 @@
-package com.exrates.checker;
+package me.exrates.checker;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

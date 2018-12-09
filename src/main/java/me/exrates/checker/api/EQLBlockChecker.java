@@ -1,6 +1,6 @@
-package com.exrates.checker.api;
+package me.exrates.checker.api;
 
-import com.exrates.checker.BitcoinBlocksCheckerService;
+import me.exrates.checker.BitcoinBlocksCheckerService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,19 +14,19 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.security.cert.X509Certificate;
 
-@Service("mbcBlockChecker")
+@Service("eqlBlockChecker")
 @PropertySource("classpath:/coins_api_endpoints.properties")
-public class MBCBlockChecker implements BitcoinBlocksCheckerService {
+public class EQLBlockChecker implements BitcoinBlocksCheckerService {
 
     @Autowired
     Client client;
 
-    @Value("#{mbc.blocks.endpoint")
+    @Value("#{eql.blocks.endpoint")
     private String endpoint;
 
     @Override
     public long getExplorerBlocksAmount() {
-        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONObject("result").getLong("height");
+        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height");
     }
 
     public static void main(String[] args) throws Exception{
@@ -47,6 +47,7 @@ public class MBCBlockChecker implements BitcoinBlocksCheckerService {
 
         String html = client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class);
         String substring = html.substring(html.indexOf(bestHtml) + bestHtml.length());
-        System.out.println(new JSONObject(client.target("https://api.mbc.wiki/?method=blockchain.supply").request().get().readEntity(String.class)).getJSONObject("result").getLong("height"));
+        System.out.println(new JSONObject(client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height"));
     }
 }
+
