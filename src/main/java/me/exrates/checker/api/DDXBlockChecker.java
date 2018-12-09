@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.client.Client;
 
-@Service("ddxBlockChecker")
+@Service
 @PropertySource("classpath:/coins_api_endpoints.properties")
 public class DDXBlockChecker extends APIExplorer {
 

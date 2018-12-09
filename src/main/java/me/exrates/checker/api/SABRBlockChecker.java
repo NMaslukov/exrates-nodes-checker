@@ -15,7 +15,7 @@ import javax.ws.rs.client.ClientBuilder;
 import java.security.cert.X509Certificate;
 import java.util.*;
 
-@Service("sabrBlockChecker")
+@Service
 @PropertySource("classpath:/coins_api_endpoints.properties")
 public class SABRBlockChecker implements BitcoinBlocksCheckerService {
 

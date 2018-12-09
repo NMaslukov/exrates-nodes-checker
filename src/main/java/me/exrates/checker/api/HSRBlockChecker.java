@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.client.Client;
 
-@Service("hsrBlockChecker")
+@Service
 @PropertySource("classpath:/coins_api_endpoints.properties")
 public class HSRBlockChecker implements BitcoinBlocksCheckerService {
 

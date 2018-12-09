@@ -16,17 +16,17 @@ import java.security.cert.X509Certificate;
 
 @Service
 @PropertySource("classpath:/coins_api_endpoints.properties")
-public class CRYPBlockChecker implements BitcoinBlocksCheckerService {
+public class BCIBlockChecker implements BitcoinBlocksCheckerService {
 
     @Autowired
     Client client;
 
-    @Value("#{cryp.blocks.endpoint")
+    @Value("#{bci.blocks.endpoint")
     private String endpoint;
 
     @Override
     public long getExplorerBlocksAmount() {
-        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height");
+        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getLong("height");
     }
 
     public static void main(String[] args) throws Exception{

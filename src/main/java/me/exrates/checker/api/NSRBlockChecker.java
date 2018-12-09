@@ -13,7 +13,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.security.cert.X509Certificate;
 
-@Service("nsrBlockChecker")
+@Service
 @PropertySource("classpath:/coins_api_endpoints.properties")
 public class NSRBlockChecker implements BitcoinBlocksCheckerService {
 

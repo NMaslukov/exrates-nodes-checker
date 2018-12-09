@@ -10,12 +10,12 @@ import javax.ws.rs.client.Client;
 
 @Service
 @PropertySource("classpath:/coins_api_endpoints.properties")
-public class LPCBlockChecker extends APIExplorer {
+public class BTXBlockChecker extends APIExplorer {
 
     @Autowired
     Client client;
 
-    public LPCBlockChecker(@Value("#{lpc.blocks.endpoint}") String endpoint, Client client) {
+    public BTXBlockChecker(@Value("#{btx.blocks.endpoint}") String endpoint, Client client) {
         super(endpoint, client);
     }
 }

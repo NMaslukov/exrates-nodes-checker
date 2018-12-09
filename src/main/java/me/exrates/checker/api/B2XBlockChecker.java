@@ -14,19 +14,19 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.security.cert.X509Certificate;
 
-@Service("ftoBlockChecker")
+@Service
 @PropertySource("classpath:/coins_api_endpoints.properties")
-public class FLOBlockChecker implements BitcoinBlocksCheckerService {
+public class B2XBlockChecker implements BitcoinBlocksCheckerService {
 
     @Autowired
     Client client;
 
-    @Value("#{fto.blocks.endpoint")
+    @Value("#{b2x.blocks.endpoint")
     private String endpoint;
 
     @Override
     public long getExplorerBlocksAmount() {
-        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height");
+        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONObject("info").getLong("blocks");
     }
 
     public static void main(String[] args) throws Exception{
@@ -43,11 +43,11 @@ public class FLOBlockChecker implements BitcoinBlocksCheckerService {
                 .hostnameVerifier((s1, s2) -> true)
                 .build();
 
-        String bestHtml = "<td class=\"height text-right\"><a href=\"/block/";
+        String bestHtml = "<a href=\"/block-height/";
 
-        String html = client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class);
+        String html = client.target("https://explorer.bitcoinatom.io/").request().get().readEntity(String.class);
         String substring = html.substring(html.indexOf(bestHtml) + bestHtml.length());
-        System.out.println(new JSONObject(client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height"));
+        System.out.println(substring.substring(0, substring.indexOf("\">")));
     }
 }
 

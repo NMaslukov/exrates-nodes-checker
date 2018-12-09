@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.client.Client;
 
-@Service("SICBlockChecker")
+@Service
 @PropertySource("classpath:/coins_api_endpoints.properties")
 public class SICBlockChecker extends APIExplorer {
         public SICBlockChecker(@Value("#{sic.blocks.endpoint}") String endpoint, Client client) {

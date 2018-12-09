@@ -16,17 +16,21 @@ import java.security.cert.X509Certificate;
 
 @Service
 @PropertySource("classpath:/coins_api_endpoints.properties")
-public class CRYPBlockChecker implements BitcoinBlocksCheckerService {
+public class BCLBlockChecker implements BitcoinBlocksCheckerService {
 
     @Autowired
     Client client;
 
-    @Value("#{cryp.blocks.endpoint")
+    @Value("#{bcl.blocks.endpoint")
     private String endpoint;
 
     @Override
     public long getExplorerBlocksAmount() {
-        return new JSONObject(client.target(endpoint).request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height");
+        String bestHtml = "<div class=\"col-12 col-md-6 weight-700\">";
+
+        String html = client.target(endpoint).request().get().readEntity(String.class);
+        String substring = html.substring(html.indexOf(bestHtml) + bestHtml.length());
+        return Long.valueOf(substring.substring(0, substring.indexOf("</div>")).trim().replace(",", ""));
     }
 
     public static void main(String[] args) throws Exception{
@@ -43,11 +47,12 @@ public class CRYPBlockChecker implements BitcoinBlocksCheckerService {
                 .hostnameVerifier((s1, s2) -> true)
                 .build();
 
-        String bestHtml = "<td class=\"height text-right\"><a href=\"/block/";
+        String bestHtml = "<div class=\"col-12 col-md-6 weight-700\">";
 
-        String html = client.target("http://eql.explorer.dexstats.info/insight-api-komodo/blocks?limit=5").request().get().readEntity(String.class);
+        String html = client.target("https://cleanblocks.info/").request().get().readEntity(String.class);
         String substring = html.substring(html.indexOf(bestHtml) + bestHtml.length());
-        System.out.println(new JSONObject(client.target("https://explorer.crypticcoin.io/insight-api-crypticcoin/blocks").request().get().readEntity(String.class)).getJSONArray("blocks").getJSONObject(0).getLong("height"));
+        Long.valueOf(substring.substring(0, substring.indexOf("</div>")).trim().replace(",", ""));
+//        System.out.println(new JSONObject(client.target("http://rizblockchain.com/ext/summary").request().get().readEntity(String.class)).getJSONArray("data").getJSONObject(0).getLong("blockcount"));
     }
 }
 
