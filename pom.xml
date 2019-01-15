@@ -7,9 +7,10 @@
     <artifactId>exrates-nodes-checker</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-
     <name>exrates-nodes-checker</name>
-    <description>Demo project for Spring Boot</description>
+
+
+    <description>Exrates node checker</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -65,6 +66,18 @@
             <artifactId>jersey-hk2</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>me.exrates</groupId>
+            <artifactId>ssm-integration</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.pengrad/java-telegram-bot-api -->
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>4.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -72,8 +85,53 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>exrates-nodes-checker</finalName>
+                    <executable>true</executable>
+                    <mainClass>me.exrates.checker.Application</mainClass>
+                </configuration>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/config</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>${project.basedir}</directory><!-- from -->
+                <targetPath>${project.build.directory}</targetPath><!-- to -->
+                <includes><!-- what -->
+                    <include>config/**</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+
     </build>
 
 
