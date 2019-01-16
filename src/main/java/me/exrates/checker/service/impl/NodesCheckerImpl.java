@@ -42,11 +42,15 @@ public class NodesCheckerImpl implements NodesChecker {
             try {
                 Response response = client.target(stockUrl + "/nodes/getBlocksCount?ticker=" + ticker.toUpperCase()).request(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .header("AUTH_TOKEN", "MOCK_TOKEN")
+                        .header("AUTH_TOKEN","MOCK_TEST")
                         .get();
-                if(response.getStatus() != 404) return;
 
-                Long blocksFromNode = response.readEntity(Long.class);
+
+                String reponseValue = response.readEntity(String.class);
+                System.out.println(reponseValue);
+                if(response.getStatus() == 404) continue;
+
+                Long blocksFromNode = Long.valueOf(reponseValue);
 
                 long blocksFromExplorer = elem.getValue().getExplorerBlocksAmount();
                 if(blocksFromNode == null){
