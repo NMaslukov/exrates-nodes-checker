@@ -42,7 +42,7 @@ public class NodesCheckerImpl implements NodesChecker {
             try {
                 Response response = client.target(stockUrl + "/nodes/getBlocksCount?ticker=" + ticker.toUpperCase()).request(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .header("AUTH_TOKEN","MOCK_TEST")
+                        .header("AUTH_TOKEN","FBSOcGiKC73j2FM")
                         .get();
 
 
