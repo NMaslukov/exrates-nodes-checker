@@ -9,5 +9,8 @@ public interface NodesChecker {
     void checkNodes() throws TelegramApiException;
 
     @Scheduled(fixedRate = 50000)
+    void checkAllNodeForWorking() throws IOException, TelegramApiException;
+
+    @Scheduled(fixedRate = 50000)
     void checkAllNodes() throws IOException, TelegramApiException;
 }
