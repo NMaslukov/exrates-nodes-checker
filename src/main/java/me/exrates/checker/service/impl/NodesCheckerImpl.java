@@ -41,7 +41,8 @@ public class NodesCheckerImpl implements NodesChecker {
 
     static {
         setOfIgnoredNodes = new HashSet<>();
-        String[] tickersArray = {"PERFECTCOIN", "BTCP", "BITDOLLAR", "BITCOINATOM", "AUNIT", "PPY", "CREA", "Not defined", "LBTC", "DDX", "BRECO"};
+        String[] tickersArray = {"PERFECTCOIN", "BTCP", "BITDOLLAR", "BITCOINATOM",
+                "AUNIT", "PPY", "CREA", "Not defined", "LBTC", "DDX", "BRECO", "ADK"};
         setOfIgnoredNodes.addAll(Arrays.asList(tickersArray));
     }
 
