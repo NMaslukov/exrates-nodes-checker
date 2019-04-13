@@ -101,7 +101,7 @@ public class NodesCheckerImpl implements NodesChecker {
     }
 
     @Override
-    @Scheduled(fixedRate = 60*60*1000)
+    @Scheduled(fixedRate = 12*60*60*1000)
     public void checkAllNodeForWorking() throws IOException, TelegramApiException {
         builder = new StringBuilder();
         List<String> listOfWorkingNode = new LinkedList<>();
