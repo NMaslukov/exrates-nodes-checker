@@ -55,7 +55,7 @@ public class NodesCheckerImpl implements NodesChecker {
     }
 
     @Override
-    @Scheduled(fixedRate = 12*60*60*1000)
+    @Scheduled(fixedRate = 30*60*1000)
     public void sendNodeStatusReport() throws IOException, TelegramApiException {
         telegramBot.sendMessage(chatId, getBtcNodesInfo());
     }
