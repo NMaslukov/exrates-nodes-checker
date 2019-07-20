@@ -16,6 +16,8 @@ node {
     stage 'Artifact'
     step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
 
+    stage 'Deploy'
+    sh "java -jar **/target/*.jar"
   }catch(e){
     throw e;
   }
