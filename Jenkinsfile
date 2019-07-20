@@ -7,11 +7,8 @@ node {
     sh "mvn -v"
     sh "java -version"
 
-    stage 'test'
-    sh "mvn test"
-
     stage 'package'
-    sh "mvn package"
+    sh "mvn clean validate compile package"
 
     stage 'Artifact'
     step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
