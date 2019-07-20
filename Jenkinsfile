@@ -17,8 +17,7 @@ node {
     step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
 
     stage 'Deploy'
-    sh "java -jar
-    /target/exrates-nodes-checker-0.0.1-SNAPSHOT.jar"
+    sh "java -jar /var/lib/jenkins/workspace/node_1/target/exrates-nodes-checker-0.0.1-SNAPSHOT.jar"
   }catch(e){
     throw e;
   }
