@@ -10,4 +10,3 @@ WORKDIR ${APP_PATH}
 RUN readlink -f application.properties
 EXPOSE 8050
 CMD java -jar api-service.jar
-

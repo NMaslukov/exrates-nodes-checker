@@ -11,10 +11,6 @@ import javax.ws.rs.client.Client;
 @EnableScheduling
 public class Application {
 
-
-    @Autowired
-    Client client;
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }

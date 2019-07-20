@@ -1,3 +1,0 @@
-#mvn clean validate compile package
-docker build --tag=openjdk:8 --build-arg ENVIRONMENT=dev --rm=true .
-docker run -p 81:8080
