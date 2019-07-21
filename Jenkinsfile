@@ -10,12 +10,12 @@ node {
     stage 'package'
     sh "mvn clean validate compile package"
 
-    stage 'Artifact'
-    step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
+    stage 'Docker build'
+    sh 'docker build -t backend --tag=openjdk:8 --build-arg ENVIRONMENT=dev --rm=true .'
 
-    stage 'Deploy'
-    sh "java -jar /var/lib/jenkins/workspace/node_1/target/exrates-nodes-checker-0.0.1-SNAPSHOT.jar"
-  }catch(e){
+    stage 'Docker run'
+    sh "docker run -p 81:8050 backend"
+  } catch(e) {
     throw e;
   }
 }
