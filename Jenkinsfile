@@ -11,10 +11,10 @@ node {
     sh "mvn clean validate compile package"
 
     stage 'Docker build'
-    sh 'sudo docker build -t backend --tag=openjdk:8 --build-arg ENVIRONMENT=dev --rm=true .'
+    sh 'docker build -t backend --tag=openjdk:8 --build-arg ENVIRONMENT=dev --rm=true .'
 
     stage 'Docker run'
-    sh "sudo docker run -p 81:8050 backend"
+    sh "docker run -p 81:8050 backend"
   } catch(e) {
     throw e;
   }
